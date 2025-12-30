@@ -1,0 +1,155 @@
+MOVIE PROJECT – FULL API DOCUMENTATION
+
+BASE URL:
+http://localhost:5000/api
+
+====================================
+AUTH APIs
+====================================
+
+1) REGISTER USER
+----------------
+Method: POST
+URL: /auth/register
+
+Request Body (JSON):
+{
+  "name": "User Name",
+  "email": "user@email.com",
+  "password": "123456"
+}
+
+------------------------------------
+
+2) LOGIN USER
+--------------
+Method: POST
+URL: /auth/login
+
+Request Body (JSON):
+{
+  "email": "user@email.com",
+  "password": "123456"
+}
+
+====================================
+MOVIE APIs
+====================================
+
+3) GET ALL MOVIES
+-----------------
+Method: GET
+URL: /movies
+
+Request Body:
+Not required
+
+====================================
+PLAN APIs
+====================================
+
+4) GET ALL PLANS
+----------------
+Method: GET
+URL: /plans
+
+Request Body:
+Not required
+
+Plan Types:
+- Free (Ads, limited watch)
+- Advance (₹6/month, single device)
+- Super Advance (₹120/year, multiple devices)
+
+====================================
+PAYMENT APIs
+====================================
+
+5) CREATE PAYMENT
+-----------------
+Method: POST
+URL: /payments/create
+
+Request Body (JSON):
+{
+  "user_id": "USER_ID",
+  "plan_name": "advance",
+  "amount": 6,
+  "payment_method": "UPI",
+  "upi_id": "user@upi",
+  "transaction_id": "TXN123456"
+}
+
+------------------------------------
+
+6) PAYMENT HISTORY
+------------------
+Method: GET
+URL: /payments/history/:userId
+
+Example:
+GET /payments/history/12345
+
+Request Body:
+Not required
+
+====================================
+ADMIN MOVIE APIs
+====================================
+
+7) ADD MOVIE
+-------------
+Method: POST
+URL: /movies/add
+
+Request Body (JSON):
+{
+  "title": "Movie Name",
+  "category": "Action",
+  "language": "Hindi",
+  "poster_url": "https://image.jpg",
+  "watch_url": "https://movie-link",
+  "download_url": "https://download-link",
+  "is_free": true
+}
+
+====================================
+DEVICE APIs
+====================================
+
+8) REGISTER DEVICE
+------------------
+Method: POST
+URL: /devices/register
+
+Request Body (JSON):
+{
+  "user_id": "USER_ID",
+  "device_name": "Samsung Galaxy",
+  "device_type": "Mobile"
+}
+
+------------------------------------
+
+9) GET USER DEVICES
+-------------------
+Method: GET
+URL: /devices/:userId
+
+Example:
+GET /devices/12345
+
+====================================
+IMPORTANT NOTES
+====================================
+
+- Content-Type: application/json
+- Backend Port: 5000
+- Frontend Port: 3000
+- Excel files used as database
+- Node.js Version: 18 LTS
+- Payment: UPI / QR Scanner supported
+
+====================================
+END OF FILE
+====================================

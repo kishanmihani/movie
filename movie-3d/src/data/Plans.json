@@ -1,0 +1,47 @@
+[
+  {
+    "id": "mobile",
+    "name": "Mobile",
+    "price": "₹149 / month",
+    "features": [
+      "Unlimited ad-free movies, TV shows, games",
+      "Watch on 1 phone or tablet",
+      "Watch in 480p (SD)",
+      "Download on 1 device"
+    ]
+  },
+  {
+    "id": "basic",
+    "name": "Basic",
+    "price": "₹199 / month",
+    "features": [
+      "Unlimited ad-free movies, TV shows, games",
+      "Watch on 1 supported device",
+      "Watch in 720p (HD)",
+      "Download on 1 device"
+    ]
+  },
+  {
+    "id": "standard",
+    "name": "Standard",
+    "price": "₹499 / month",
+    "features": [
+      "Unlimited ad-free movies, TV shows, games",
+      "Watch on 2 devices",
+      "Watch in 1080p (Full HD)",
+      "Download on 2 devices"
+    ]
+  },
+  {
+    "id": "premium",
+    "name": "Premium",
+    "price": "₹649 / month",
+    "features": [
+      "Unlimited ad-free movies, TV shows, games",
+      "Watch on 4 devices",
+      "Watch in 4K + HDR",
+      "Download on 6 devices",
+      "Spatial audio"
+    ]
+  }
+]

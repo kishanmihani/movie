@@ -1,0 +1,21 @@
+{
+  "hero": {
+    "title": "Unlimited Movies, Anytime",
+    "subtitle": "Watch free & premium movies on web and mobile",
+    "cta": "Get Started"
+  },
+  "features": [
+    { "title": "Free Movies", "desc": "Watch popular movies without paying" },
+    { "title": "Mobile + Web", "desc": "Use on phone, tablet, laptop" },
+    { "title": "Secure Access", "desc": "Device-based login protection" }
+  ],
+  "plans": [
+    { "name": "Free", "price": "₹0", "details": "Ads supported" },
+    { "name": "Advance", "price": "₹6 / month", "details": "Single device" },
+    { "name": "Super", "price": "₹120 / year", "details": "Multi device" }
+  ],
+  "footer": {
+    "copyright": "© 2025 MovieFlix",
+    "links": ["Privacy Policy", "Terms", "Support"]
+  }
+}
