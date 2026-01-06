@@ -1,47 +1,96 @@
-import { useRef } from "react";
-import trending from "../data/trending.json";
+import { useEffect, useState } from "react";
+// import trending from "../data/trending.json";
 import "./TrendingSlider.css";
 
-export default function TrendingSlider() {
-  const rowRef = useRef(null);
+export default function TrendingSlider(props) {
+  const [itemsPerSlide, setItemsPerSlide] = useState(4);
+   const carouselId = `trending-${Math?.random().toString(36).substr(2, 9)}`;
 
-  const scrollLeft = () => {
-    rowRef.current.scrollBy({
-      left: -300,
-      behavior: "smooth"
-    });
+  // Set condition based on screen size
+  const handleResize = () => {
+    const width = window.innerWidth;
+
+    if (width < 576) {
+      setItemsPerSlide(2); // Mobile
+    } else if (width < 992) {
+      setItemsPerSlide(3); // Tablet
+    } else {
+      setItemsPerSlide(4); // Desktop
+    }
   };
 
-  const scrollRight = () => {
-    rowRef.current.scrollBy({
-      left: 300,
-      behavior: "smooth"
-    });
-  };
+  useEffect(() => {
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Chunk data based on itemsPerSlide
+  const slides = [];
+  const movieList=props?.playList?.movieList;
+  for (let i = 0; i < movieList.length; i += itemsPerSlide) {
+    slides.push(movieList.slice(i, i + itemsPerSlide));
+  }
 
   return (
-    <div className="trending-wrapper">
-      <h2 className="trending-title">Trending Now</h2>
+    <div className="container">
+      <h2 className="trending-title mt-4 text-start  text-uppercase fw-normal ">
+        {props?.playList?.header}
+      </h2>
 
-      {/* LEFT ARROW */}
-      <button className="arrow left" onClick={scrollLeft}>
-        &#10094;
-      </button>
+      <div
+        id={carouselId}
+        className="carousel slide  "
+        // data-bs-ride="carousel"
+         // hover pe pause
+         data-bs-ride="false" 
+  data-bs-wrap="true" 
+      >
+        <div className="carousel-inner">
+          {slides.map((group, slideIndex) => (
+            <div
+              key={slideIndex}
+              className={`carousel-item ${slideIndex === 0 ? "active" : ""}`}
+            >
+              <div className="row g-3">
+                {group.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`col-${12 / itemsPerSlide}`}
+                  >
+                    <div className="movie-card">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="movie-img"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
 
-      {/* RIGHT ARROW */}
-      <button className="arrow right" onClick={scrollRight}>
-        &#10095;
-      </button>
+        {/* Controls */}
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target={`#${carouselId}`}
+          data-bs-slide="prev"
+        >
+          <span className="carousel-control-prev-icon" />
+        </button>
 
-      <div className="trending-row" ref={rowRef}>
-        {trending.map((item, index) => (
-          <div className="trending-card" key={item.id}>
-            <span className="trending-number">{index + 1}</span>
-            <img src={item.image} alt={item.title} className="trending-img" />
-          </div>
-        ))}
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target={`#${carouselId}`}
+          data-bs-slide="next"
+        >
+          <span className="carousel-control-next-icon" />
+        </button>
       </div>
     </div>
   );
 }
-//

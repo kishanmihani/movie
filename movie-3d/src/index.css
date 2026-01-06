@@ -1,7 +1,16 @@
 
+
+@font-face {
+  font-family: 'Barlow';
+  src: url('./assets/font/Barlow-Regular.ttf') format('truetype');
+  /* font-weight: 700; */
+  font-style: normal;
+}
+
 body {
   background-color: #0B1220;
   color: #E5E7EB;
+  font-family: "Barlow", sans-serif;
 }
 :root {
   --bg-dark: #060b23;

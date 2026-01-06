@@ -1,0 +1,30 @@
+{
+  "header":"Lattest WebSeries",
+  "movieList":[
+  {
+    "id": 1,
+    "title": "Stranger Things",
+    "image": "https://images.unsplash.com/photo-1536440136628-849c177e76a1"
+  },
+  {
+    "id": 2,
+    "title": "Great Indian Show",
+    "image": "https://images.unsplash.com/photo-1505685296765-3a2736de412f"
+  },
+  {
+    "id": 3,
+    "title": "Jolly LLB",
+    "image": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85"
+  },
+  {
+    "id": 4,
+    "title": "The Girlfriend",
+    "image": "https://images.unsplash.com/photo-1585951237313-1979e4df7385"
+  },
+  {
+    "id": 5,
+    "title": "Single Parents",
+    "image": "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e"
+  }
+]
+}

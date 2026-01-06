@@ -1,43 +1,69 @@
 import { Link } from "react-router-dom";
+import SideMenu from "./SideMenu";
 
-export default function Navbar() {
+export default function Navbar(props) {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark backgroundColor sticky-top">
-      <div className="container">
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark  sticky-top px-3" style={{background:"linear-gradient(180deg, #050816, #060b23)"}}>
+        <div className="container">
 
-        {/* Logo */}
-        <Link className="navbar-brand fw-bold text-primary" to="/">
-          MovieFlix
-        </Link>
+          {/* Mobile Menu Button */}
+          <button
+            className="btn text-white fs-4 d-lg-none"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sideMenu"
+          >
+            ☰
+          </button>
 
-        {/* Mobile Toggle */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+          {/* Logo */}
+          <Link className="navbar-brand fw-bold fs-2 ms-2" to="/">
+            <span className="text-danger">Movie</span>Flix
+          </Link>
 
-        {/* Links */}
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto gap-lg-3">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link btn btn-outline-primary px-3" to="/register">
-                Register
-              </Link>
-            </li>
-          </ul>
+          {/* Desktop Menu */}
+          <div className="collapse navbar-collapse d-none d-lg-flex">
+            <ul className="navbar-nav ms-auto gap-3 text-uppercase fw-semibold">
+
+              <li className="nav-item">
+                <Link className="nav-link text-danger" to="/new">New</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/popular">Popular</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/trending">Trending</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/tags">Tags</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/models">Models</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/favorites">Favorites</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/history">History</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" onClick={() => props.setloginPopup(true)}>Login</Link>
+              </li>
+
+            </ul>
+          </div>
         </div>
+      </nav>
 
-      </div>
-    </nav>
+      {/* Mobile Sidebar */}
+      <SideMenu />
+    </>
   );
 }

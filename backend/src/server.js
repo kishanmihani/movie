@@ -1,6 +1,9 @@
+// const { PORT } = require("./config");
+const { PORT } = require("./config");
 const express = require("express");
 const cors = require("cors");
 
+// const port = parseInt(PORT) || 3000;
 const authRoutes = require("./routes/auth.routes");
 const movieRoutes = require("./routes/movie.routes");
 const planRoutes = require("./routes/plan.routes");
@@ -16,6 +19,6 @@ app.use("/api/plans", planRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/devices", deviceRoutes);
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
