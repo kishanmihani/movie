@@ -3,16 +3,69 @@ import { BsWallet2 } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { MdDevices } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { apiPost } from "../api/apiMethod";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPopup({ open, onClose }) {
+  const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleLogin = async () => {
+  setError("");
+  setLoading(true);
 
+  try {
+    const res = await apiPost("auth/login", {
+      email,
+      password
+    });
+
+    const token = res.data.token;
+
+    if (remember) {
+      localStorage.setItem("token", token); 
+    } else {
+      sessionStorage.setItem("token", token); 
+    }
+
+    setLoading(false);
+    navigate("/dashboard");
+    onClose();
+  } catch (err) {
+    setLoading(false);
+    setError(err.response?.data?.msg || "Login failed");
+  }
+};
+const handleRegister = async () => {
+  setError("");
+  setLoading(true);
+
+  if (!name || !email || !password) {
+    setError("All fields are required");
+    setLoading(false);
+    return;
+  }
+
+  try {
+    await apiPost("auth/register", {
+      name,
+      email,
+      password
+    });
+
+    setLoading(false);
+    setIsRegister(false); // register ke baad login screen
+  } catch (err) {
+    setLoading(false);
+    setError(err.response?.data?.msg || "Register failed");
+  }
+};
   if (!open) return null;
 
   return (
@@ -70,7 +123,6 @@ export default function LoginPopup({ open, onClose }) {
                 />
               )}
 
-              {/* EMAIL */}
               <input
                 type="email"
                 className="form-control bg-white  border-0 text-black mb-3"
@@ -79,7 +131,6 @@ export default function LoginPopup({ open, onClose }) {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              {/* PASSWORD */}
               <div className="position-relative mb-3">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -116,9 +167,22 @@ export default function LoginPopup({ open, onClose }) {
               )}
 
               {/* SUBMIT */}
-              <button className="btn btn-danger w-100 py-2 mb-3">
-                {isRegister ? "Create Account" : "Login"}
-              </button>
+              {error && (
+  <div className="alert alert-danger py-2 text-center">
+    {error}
+  </div>
+)}
+              <button
+  className="btn btn-danger w-100 py-2 mb-3"
+  onClick={isRegister ? handleRegister : handleLogin}
+  disabled={loading}
+>
+  {loading
+    ? "Please wait..."
+    : isRegister
+    ? "Create Account"
+    : "Login"}
+</button>
 
               {/* SWITCH */}
               <p className="text-secondary text-center small">

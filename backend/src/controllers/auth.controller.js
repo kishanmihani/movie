@@ -1,4 +1,5 @@
 const { readExcel, writeExcel } = require("../services/excel.service");
+const jwt = require("jsonwebtoken");
 const { v4: uuid } = require("uuid");
 
 exports.register = async (req, res) => {
@@ -23,17 +24,32 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  console.log("post login api")
+  const { email, password } = req.body;
+
   const users = await readExcel("users.xlsx");
 
-  const user = users.find(
-    u => u.email === req.body.email && u.password === req.body.password
+  const user = users.find(u => u.email === email);
+
+  if (!user) {
+    return res.status(401).json({
+      msg: "Email not found"
+    });
+  }
+
+  if (user.password !== password) {
+    return res.status(401).json({
+      msg: "Incorrect password"
+    });
+  }
+
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES }
   );
 
-  if (!user) return res.status(401).json({ msg: "Invalid" });
-
-  user.last_login = new Date();
-  await writeExcel("users.xlsx", users);
-
-  res.json(user);
+  res.json({
+    msg: "Login successful",
+    token
+  });
 };
