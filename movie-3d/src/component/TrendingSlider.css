@@ -44,8 +44,8 @@ border: none;
 /* Movie Image */
 .movie-img {
   width: 100%;
-  height: 260px;
-  object-fit: cover;
+  height:100%;
+  object-fit: contain;
   border-radius: 12px;
 }
 
@@ -63,7 +63,7 @@ border: none;
 /* Tablet */
 @media (max-width: 991px) {
   .movie-img {
-    height: 240px;
+    height:100%
   }
   .hero-wrapper{
     height: 450px;

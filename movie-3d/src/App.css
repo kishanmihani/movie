@@ -7,6 +7,16 @@
 .backgroundColor{
   background-color: rgba(5, 8, 22, 0.9) !important;
 }
+.movie-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;   /* max 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  line-height: 1.4;
+  max-height: calc(1.4em * 2); /* optional but safe */
+}
 .logo {
   height: 6em;
   padding: 1.5em;

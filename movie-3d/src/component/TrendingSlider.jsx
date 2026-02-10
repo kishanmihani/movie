@@ -27,15 +27,17 @@ export default function TrendingSlider(props) {
 
   // Chunk data based on itemsPerSlide
   const slides = [];
-  const movieList=props?.playList?.movieList;
-  for (let i = 0; i < movieList.length; i += itemsPerSlide) {
+  const movieList=props?.playList;;
+  console.log(props?.playLists)
+  for (let i = 0; i < movieList?.length; i += itemsPerSlide) {
     slides.push(movieList.slice(i, i + itemsPerSlide));
   }
 
   return (
     <div className="container">
       <h2 className="trending-title mt-4 text-start  text-uppercase fw-normal ">
-        {props?.playList?.header}
+        
+        {props?.title}
       </h2>
 
       <div
@@ -60,10 +62,11 @@ export default function TrendingSlider(props) {
                   >
                     <div className="movie-card">
                       <img
-                        src={item.image}
+                        src={item.thumbnail}
                         alt={item.title}
                         className="movie-img"
                       />
+                      <p className="movie-title">{item.title}</p>
                     </div>
                   </div>
                 ))}

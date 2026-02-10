@@ -5,7 +5,7 @@ import { MdDevices } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { apiPost } from "../api/apiMethod";
 import { useNavigate } from "react-router-dom";
-
+import { RxCrossCircled } from "react-icons/rx";
 export default function LoginPopup({ open, onClose }) {
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
@@ -76,9 +76,9 @@ const handleRegister = async () => {
           {/* CLOSE */}
           <button
             onClick={onClose}
-            className="btn btn-link text-secondary position-absolute top-0 end-0 m-3 text-decoration-none"
+            className="btn btn-link text-danger position-absolute top-0 end-0 m-3 text-decoration-none"
           >
-            Skip for now
+           <RxCrossCircled size={27}/>
           </button>
 
           <div className="row g-0">
@@ -153,7 +153,7 @@ const handleRegister = async () => {
 
               {/* REMEMBER */}
               {!isRegister && (
-                <div className="form-check mb-4">
+                <div className="form-check mb-4 text-start">
                   <input
                     className="form-check-input"
                     type="checkbox"
