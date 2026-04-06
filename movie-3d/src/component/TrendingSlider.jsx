@@ -1,99 +1,100 @@
-import { useEffect, useState } from "react";
-// import trending from "../data/trending.json";
+import { useState, useEffect } from "react";
 import "./TrendingSlider.css";
+import { playMovie } from "../services/movie.services";
+import MoviePlayer from "./MoviePlayer";
 
 export default function TrendingSlider(props) {
-  const [itemsPerSlide, setItemsPerSlide] = useState(4);
-   const carouselId = `trending-${Math?.random().toString(36).substr(2, 9)}`;
+  const [itemsPerRow, setItemsPerRow] = useState(4);
+  const [visibleCount, setVisibleCount] = useState(8); // initial items
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [playUrl, setPlayUrl] = useState(null);
+  const movieList = props?.playList || [];
 
-  // Set condition based on screen size
-  const handleResize = () => {
-    const width = window.innerWidth;
+  // Responsive items per row
+  // const handleResize = () => {
+  //   const width = window.innerWidth;
 
-    if (width < 576) {
-      setItemsPerSlide(2); // Mobile
-    } else if (width < 992) {
-      setItemsPerSlide(3); // Tablet
-    } else {
-      setItemsPerSlide(4); // Desktop
+  //   if (width < 576) {
+  //     setItemsPerRow(2);
+  //     setVisibleCount(4);
+  //   } else if (width < 992) {
+  //     setItemsPerRow(3);
+  //     setVisibleCount(6);
+  //   } else {
+  //     setItemsPerRow(4);
+  //     setVisibleCount(8);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
+  // Show only limited items
+  const visibleItems = movieList.slice(0, visibleCount);
+  const handlePlay = async (videoId) => {
+    const res = await playMovie(videoId);
+    if (res.data.success) {
+      setPlayUrl(res.data.play_url);
     }
   };
 
-  useEffect(() => {
-    handleResize(); // initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Chunk data based on itemsPerSlide
-  const slides = [];
-  const movieList=props?.playList;;
-  console.log(props?.playLists)
-  for (let i = 0; i < movieList?.length; i += itemsPerSlide) {
-    slides.push(movieList.slice(i, i + itemsPerSlide));
-  }
-
   return (
     <div className="container">
-      <h2 className="trending-title mt-4 text-start  text-uppercase fw-normal ">
-        
-        {props?.title}
-      </h2>
+      <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h2 className="trending-title fs-3s text-uppercase fw-normal">
+          {props?.title}
+        </h2>
 
-      <div
-        id={carouselId}
-        className="carousel slide  "
-        // data-bs-ride="carousel"
-         // hover pe pause
-         data-bs-ride="false" 
-  data-bs-wrap="true" 
-      >
-        <div className="carousel-inner">
-          {slides.map((group, slideIndex) => (
-            <div
-              key={slideIndex}
-              className={`carousel-item ${slideIndex === 0 ? "active" : ""}`}
-            >
-              <div className="row g-3">
-                {group.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`col-${12 / itemsPerSlide}`}
-                  >
-                    <div className="movie-card">
-                      <img
-                        src={item.thumbnail}
-                        alt={item.title}
-                        className="movie-img"
-                      />
-                      <p className="movie-title">{item.title}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Controls */}
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target={`#${carouselId}`}
-          data-bs-slide="prev"
-        >
-          <span className="carousel-control-prev-icon" />
-        </button>
-
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target={`#${carouselId}`}
-          data-bs-slide="next"
-        >
-          <span className="carousel-control-next-icon" />
-        </button>
+        {/* Show More / Less Button */}
+        {movieList.length > visibleCount ? (
+          <button
+            className="btn btn-sm btn-outline-light"
+            onClick={() => setVisibleCount((prev) => prev + itemsPerRow)}
+          >
+            More
+          </button>
+        ) : movieList.length > 8 ? (
+          <button
+            className="btn btn-sm btn-outline-light "
+            onClick={() => setVisibleCount(8)}
+          >
+            Less
+          </button>
+        ) : null}
       </div>
+
+      {/* Movies Grid */}
+      <div className="row g-3">
+        {visibleItems?.map((item) => (
+          <div key={item.id} onClick={() => {
+            console.log("Selected Movie:", item);
+                setSelectedMovie(item);
+                setPlayUrl(null);
+              }} className={`col-${12 / itemsPerRow}`}>
+            <div className="movie-card">
+              <img
+                src={item.thumbnail}
+                alt={item.title}
+                className="movie-img"
+              />
+              <p className="movie-title mt-2">{item.title}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {selectedMovie && (
+              <MoviePlayer
+                movie={selectedMovie}
+                onPlay={() => handlePlay(selectedMovie.videoId)}
+                onClose={() => {
+                  setSelectedMovie(null);
+                  setPlayUrl(null);
+                }}
+              />
+            )}
     </div>
   );
 }

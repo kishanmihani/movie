@@ -22,11 +22,7 @@ border: none;
   background: linear-gradient(149deg, #192247 0%, #210e17 99.08%);
 }
 /* Title */
-.trending-title {
-  color: #fff;
-  font-size: 32px;
-  margin-left: 20px;
-}
+
 
 /* Movie Card */
 .movie-card {
@@ -69,9 +65,9 @@ border: none;
     height: 450px;
   }
 
-  .trending-title {
+  /* .trending-title {
     font-size: 26px;
-  }
+  } */
 }
 
 /* Mobile */
@@ -80,10 +76,10 @@ border: none;
     height: 300px;
   }
 
-  .trending-title {
+  /* .trending-title {
     font-size: 22px;
     margin-left: 10px;
-  }
+  } */
 .hero-wrapper{
     height: 400px;
   }

@@ -28,7 +28,7 @@ export default function Hero() {
   return (
     <>
       {/* HERO */}
-      <section className="hero-wrapper d-none container position-relative">
+      <section className="hero-wrapper container position-relative">
         <div className="carousel-inner">
           {movies.map((movie, index) => (
             <div
