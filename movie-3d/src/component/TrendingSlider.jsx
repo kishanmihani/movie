@@ -34,8 +34,9 @@ export default function TrendingSlider(props) {
 
   // Show only limited items
   const visibleItems = movieList.slice(0, visibleCount);
-  const handlePlay = async (videoId) => {
-    const res = await playMovie(videoId);
+  const handlePlay = async (data) => {
+    debugger;
+    const res = await playMovie(data?.videoId);
     if (res.data.success) {
       setPlayUrl(res.data.play_url);
     }
@@ -88,7 +89,8 @@ export default function TrendingSlider(props) {
       {selectedMovie && (
               <MoviePlayer
                 movie={selectedMovie}
-                onPlay={() => handlePlay(selectedMovie.videoId)}
+                playUrl={playUrl}
+                onPlay={ handlePlay}
                 onClose={() => {
                   setSelectedMovie(null);
                   setPlayUrl(null);
